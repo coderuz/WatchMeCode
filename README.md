@@ -20,11 +20,14 @@ python3 manage.py runserver
 
 Creating and Editing showrooms is incomplete.
 You may want to go to hardcoded url for now
+
 Like:
   - localhost:8000/room/myroom
+  
 Edit:
   - localhost:8000/edit/myroom
 
 > It will ask for login
 > Username: test
-> Password: test
+> Password: thisistest
+
