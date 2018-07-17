@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<style type="text/css">
+		* {
+			margin: 0;
+			padding: 0;
+		}
+	</style>
+	<link href="/static/prism.css" rel="stylesheet" />
+</head>
+<body>
+<!-- TODO: Put nav bar about author and language  -->
+<pre><code class="language-python" id="showroom"> <!-- TODO: Change Language Class (to render argument language) -->
+    <!-- TODO: Insert Saved Code from render argument source -->
+</code></pre>
+	<script src="/static/prism.js"></script>
+    <script>
+            // TODO: connect to room channel. Get it from render Argument room
+            let socket = new WebSocket('ws://' + window.location.host + '/student/');
+            socket.onopen = function open() {
+                console.log('ws connection created.');
+            };
+
+            socket.onmessage = function message(event) {
+                let content = JSON.parse(event.data);
+                let code = content['code'];
+                if(code){
+                    document.getElementById('showroom').innerHTML = code;
+                    Prism.highlightAll();
+                }
+            };
+
+            if (socket.readyState === WebSocket.OPEN) {
+                socket.onopen();
+            }
+    </script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link href="/static/edit.css" rel="stylesheet" />
+</head>
+<body>
+
+<nav>
+    <h2>#WatchMeCode</h2>
+    <button id="save">&nbsp;Save&nbsp;</button>
+</nav>
+
+<pre><textarea class="language-php" id="textarea">
+</textarea></pre>
+
+<script src="/static/prism.js"></script>
+<script src="/static/js/jquery.js"></script>>
+<script>
+    // TODO: connect to group channel
+    let socket = new WebSocket('ws://' + window.location.host + '/teacher/');
+    socket.onopen = function open() {
+        console.log('ws connection created.');
+    };
+
+    socket.onmessage = function message(event) {
+        //console.log(event.data);
+    };
+
+    if (socket.readyState === WebSocket.OPEN) {
+        socket.onopen();
+    }
+
+    $('#textarea').on('keyup', function() {
+        socket.send( $('textarea').val() );
+        if(saveButton.html() === '&nbsp;Saved&nbsp;'){
+            saveButton.html('&nbsp;Save&nbsp;');
+        }
+    });
+
+    let token = '{{ csrf_token }}';
+    let saveButton = $('#save');
+    saveButton.on('click', function () {
+        if ( $('textarea').val() ){
+            $.post('/save', {'code': $('textarea').val(), 'csrfmiddlewaretoken': token}, function (e) {
+                if(e.status){
+                    saveButton.html('&nbsp;Saved&nbsp;');
+                }
+            });
+        }
+    });
+</script>
+</body>
+</html>
