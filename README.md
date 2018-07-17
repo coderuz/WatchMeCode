@@ -23,9 +23,11 @@ You may want to go to hardcoded url for now
 
 Like:
   - localhost:8000/room/myroom
+  
 Edit:
   - localhost:8000/edit/myroom
 
 > It will ask for login
 > Username: test
 > Password: thisistest
+
